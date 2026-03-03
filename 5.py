@@ -1,0 +1,6 @@
+a=input("enter the name: ")
+b=int(input("enter the age: "))
+name=(a.upper()+",\n"+" "+"Age is "+ str(b) )
+print(name)
+print(name.replace(" ","_"))
+print(len (name))
