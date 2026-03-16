@@ -1,0 +1,9 @@
+my_tuple=(10,20,30)
+tuple_list=list(my_tuple)
+my_string="python"
+string_list=list(my_string)
+my_range=range(1,6)
+range_list=list(my_range)
+print(tuple_list)
+print(string_list)
+print(range_list)
