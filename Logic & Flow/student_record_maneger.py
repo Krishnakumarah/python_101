@@ -17,6 +17,12 @@ def add_grade(name,grade):
     student_records[name]["grades"].add(grade)
     print(f"Grade {grade} added for student '{name}'.")    
 
+def is_enrolled(name,course):
+    if name not in student_records:
+        print(f"Student '{name}' not found.")
+        return False
+    return course in student_records[name]["courses"]
+
 
 add_student("Alice", 20, ["Math", "Physics"])
 add_student("Bob", 22, ["Biology", "Chemistry"])
@@ -24,4 +30,7 @@ add_grade("Alice", 90)
 add_grade("Alice", 85)
 add_grade("Bob", 75)
 add_grade("Charlie", 80)  # Non-existent student
-print(student_records)
+print(is_enrolled("Alice", "Math"))  # Should return True
+print(is_enrolled("Alice", "Biology"))  # Should return False
+print(is_enrolled("Bob", "Biology"))  # Should return True
+print(is_enrolled("Charlie", "Math"))  # Non-existent student, should print message and return False  # Non-existent student
