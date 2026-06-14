@@ -23,14 +23,22 @@ def is_enrolled(name,course):
         return False
     return course in student_records[name]["courses"]
 
+def calculate_average_grade(name):
+    if name not in student_records:
+        print(f"Student '{name}' not found.")
+        return None
+    grade_set=student_records[name]["grades"]
+    if not grade_set:
+        return 0.0
+    return float(sum(grade_set)/len(grade_set))
+
 
 add_student("Alice", 20, ["Math", "Physics"])
 add_student("Bob", 22, ["Biology", "Chemistry"])
 add_grade("Alice", 90)
 add_grade("Alice", 85)
 add_grade("Bob", 75)
-add_grade("Charlie", 80)  # Non-existent student
-print(is_enrolled("Alice", "Math"))  # Should return True
-print(is_enrolled("Alice", "Biology"))  # Should return False
-print(is_enrolled("Bob", "Biology"))  # Should return True
-print(is_enrolled("Charlie", "Math"))  # Non-existent student, should print message and return False  # Non-existent student
+print(calculate_average_grade("Alice"))  # Should return 87.5
+print(calculate_average_grade("Bob"))  # Should return 75.0
+print(calculate_average_grade("Charlie"))  # Non-existent student, should print message and return None
+print(calculate_average_grade("Alice"))  # Should return 87.5 again
