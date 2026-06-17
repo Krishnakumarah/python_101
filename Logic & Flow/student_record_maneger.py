@@ -1,23 +1,20 @@
 student_records = {}
+
 def add_student(name, age, courses):
     if name in student_records:
         print(f"Student '{name}' already exists.")
         return
-    student_records[name] = {
-        "age": age,
-        "grades": set(),
-        "courses": set(courses)
-    }
+    student_records[name] = {"age": age, "grades": set(), "courses": set(courses)}
     print(f"Student '{name}' added successfully.")
 
-def add_grade(name,grade):
+def add_grade(name, grade):
     if name not in student_records:
         print(f"Student '{name}' not found.")
         return
     student_records[name]["grades"].add(grade)
-    print(f"Grade {grade} added for student '{name}'.")    
+    print(f"Grade {grade} added for student '{name}'.")
 
-def is_enrolled(name,course):
+def is_enrolled(name, course):
     if name not in student_records:
         print(f"Student '{name}' not found.")
         return False
@@ -27,33 +24,33 @@ def calculate_average_grade(name):
     if name not in student_records:
         print(f"Student '{name}' not found.")
         return None
-    grade_set=student_records[name]["grades"]
-    if not grade_set:
-        return 0.0
-    return float(sum(grade_set)/len(grade_set))
-def list_student_by_course(name,course):
-    if course in courses:
-        return list_students_by_course
+    grades = student_records[name]["grades"]
+    if not grades:
+        return 0
+    return sum(grades) / len(grades)
 
 def list_students_by_course(course):
-    enrolled_students = []
-    
-    
-    for name, info in student_records.items():
-        
-        if course in info["courses"]:
-            enrolled_students.append(name)
-            
-    return enrolled_students
- 
-    
-        
+    students_in_course = []
+    for name, details in student_records.items():
+        if course in details["courses"]:
+            students_in_course.append(name)
+    return students_in_course
+
+def filter_top_students(threshold):
+    top_students = []
+    for name in student_records:
+        if calculate_average_grade(name) > threshold:
+            top_students.append(name)
+    return top_students
 
 
 add_student("Alice", 20, ["Math", "Physics"])
 add_student("Bob", 22, ["Math", "Biology"])
 add_student("Diana", 23, ["Chemistry", "Physics"])
-print(list_students_by_course("Math"))  # Should return ["Alice", "Bob"]
-print(list_students_by_course("Physics"))  # Should return ["Alice", "Diana"]
-print(list_students_by_course("Biology"))  # Should return ["Bob"]
-print(list_students_by_course("History"))  # Should return an empty list
+add_grade("Alice", 90)
+add_grade("Alice", 85)
+add_grade("Bob", 75)
+add_grade("Diana", 95)
+print(filter_top_students(80))  # Should return ["Alice", "Diana"]
+print(filter_top_students(90))  # Should return ["Diana"]
+print(filter_top_students(100))  # Should return an empty list
