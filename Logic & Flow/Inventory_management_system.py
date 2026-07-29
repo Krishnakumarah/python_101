@@ -22,13 +22,16 @@ def update_stock(item,quantity):
     # FIX: Update ONLY the "stock" key inside the nested dictionary
     inventory[item]["stock"] = new_stock
     print(f"Stock for '{item}' updated successfully.")
-
+def check_availability(item):
+    if item not in inventory:
+        return "Item not found"
+    return inventory[item]["stock"]
 add_item("Apple", 0.5, 100)
 add_item("Banana", 0.2, 50)
-add_item("Apple", 0.6, 30)  # Should print an error
 update_stock("Apple", -20)
 update_stock("Banana", 30)
-update_stock("Orange", 10)  # Should print an error
-update_stock("Apple", -90)
-print(inventory)  
+print(check_availability("Apple"))  # Should return 80
+print(check_availability("Banana"))  # Should return 80
+print(check_availability("Orange"))  # Should return "Item not found"
+ 
 
