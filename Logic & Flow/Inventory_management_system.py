@@ -29,11 +29,22 @@ def check_availability(item):
         return "Item not found"
     return inventory[item]["stock"]
 
+def sales_report(sales):
+    total_revenue = 0
+    for item, quantity in sales.items():
+        if item not in inventory:
+            print(f"Error: Item '{item}' not found.")
+            continue
+        if inventory[item]["stock"] < quantity:
+            print(f"Error: Insufficient stock for '{item}'.")
+            continue
+        inventory[item]["stock"] -= quantity
+        total_revenue += quantity * inventory[item]["price"]
+    return f"Total revenue: ${total_revenue:.2f}"
 
-add_item("Apple", 0.5, 100)
-add_item("Banana", 0.2, 50)
-update_stock("Apple", -20)
-update_stock("Banana", 30)
-print(check_availability("Apple"))  # Should return 80
-print(check_availability("Banana"))  # Should return 80
-print(check_availability("Orange"))  # Should return "Item not found"
+
+add_item("Apple", 0.5, 50)
+add_item("Banana", 0.2, 60)
+sales = {"Apple": 30, "Banana": 20, "Orange": 10}  # Orange should print an error
+print(sales_report(sales))  # Should output: 19.0
+print(inventory)
